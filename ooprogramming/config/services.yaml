@@ -23,9 +23,12 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller/'
-        tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Electricity\MeterReader\Domain\MeterReaderRepository: '@App\Electricity\MeterReader\Infrastructure\Parser\MeterReaderParser'
+
+    App\Shared\Infrastructure\Symfony\Exception\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception}
