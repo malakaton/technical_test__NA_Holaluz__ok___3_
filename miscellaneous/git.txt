@@ -1,0 +1,10 @@
+1 - We decided to remove some creepy old section from our Legacy application, but we didn't know a few co-workers still used it. In the meantime, someone deployed a few fixes to master. Now you have a worried Product Owner telling you to recover this old code. How would you do this with git commands?
+
+To recover a determinate commit or branch first we need to get his sha (id). With this command: git reflog --no-abbrev will be get all commits and his sha1. Once obtained the interested sha, will execute this command: git checkout -b <branch name> <sha> to recreate this commit or branch
+
+2 - A coworker convinced you of always using git from the console. You are making a commit and... Vim opens! The horror! You have written the commit message, but how do we save the file and exit Vim?
+to exit :q enter, to save and quit :wq enter. :q! or :wq! will quit or save and quit without confirmation of changes
+
+3 - We have two co-workers who have a strong opinion about git, one is a Merge fan and the other is a Rebase evangelizer. What is your opinion about Rebase and Merge? ?
+
+The rebase unifies the branches leaving a linear or more beautiful tree. When we want to unify branches, merge generates another commit, which may seem like an unnecessary commit. The most important thing is that rebase unifies the branches and does not completely maintain the history of changes (commits) in addition to not respecting the chronological order of the commits. If i need to work with other developers i usually/prefer work with git merge

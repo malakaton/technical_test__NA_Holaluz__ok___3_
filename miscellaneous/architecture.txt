@@ -1,0 +1,19 @@
+1 - Our CTO keeps saying sticky sessions are bad and they should not exist. But are they that bad? What are the effects of enabling / disabling them?
+
+The benefits of sticky sessions are that the requests made by a specific session are routed on the same server. Is a  guarantee for pending requests don't be lost(Example e-commerce: a customer put a item in the basket and wants to continue buying, staying in a sticky session, he would not lose what he has added in the basket). This practice can become bad if, for example, in the same session we make many requests can overload a server and have bad load distribuiton between servers
+
+2 - Your team is performing maintenance tasks in a PostgreSQL Cluster so it's necessary to put the website in maintenance mode. But Google keeps indexing the maintenance page and this is affecting our SEO. How can we avoid this situation?
+
+I think a possible solution is to add on our .htaccess file a line of code to redirect the goolge bots to an specific php file (503.php) On that php file will be add headers to inform to google bots that our web is in maintance (HTTP status 503) and should will return in a determinate hour (header(’Retry-After: 3600?) (1 hour)
+
+3 - Our data scientists need to run a predictive model for each of our ~200.000 customers, and each one takes about 40 seconds to finish. How could this be handled in order to have the results in a few hours?
+
+I never worked with predictive models, but i thought that a possible solution may be work with multiple threads, that each threat work with ~ 90 customers (200.000 customers * 40seconds = 8.000.000 seconds. 8.000.000 / 3600 seconds (1 hour) = 2222. 2222 seconds. 200.000 customers / 2222 seconds = 90 customers. 90 customers * 40 seconds will be done in 3600 seconds) You will work with 2222 threads maybe is a madness... other solution is distribuate this threads on differents servers
+
+4 - A DevOps Engineer in the team keeps saying we need to start applying IAM roles to our EC2 instances in AWS. Do you know what this is and what can it be used for?
+
+I never worked with aws, but IAM is an identity used to help to control the access of the AWS resources in a safe way. Is used to know who is authenticated and have authorization to use AWS resources
+
+5 - We have started using Amazon SQS which is an at-least-once delivery queue system. I did not want to pick the next ticket in the Backlog as it said we need to implement message deduping. Do you know what this is? How would you implement such feature? Why do we need this?
+
+I never worked with SQS. I only know that deduping is a process to delete identical entries in a data set, such as email list. We need this feature to receive help to ensure "exactly once" delivery to allow you to safely resubmit a message to the queue if you are unsure whether you submitted it without error, before. 

@@ -1,0 +1,27 @@
+1 - We need to know the date of the maximum consumption for each address of our clients. Can you write a query that returns this information? You can use `clients_and_consumptions.sql` in order to build the table structure and minimal data. Use PostgreSQL preferably, and otherwise tell us what engine you have used.
+
+I used MariaDB because lightweight database software that puts minimal strain on technical resources. Also in this SQL sample have less data to store and i think is enough to do this exercise. But for professional business i will choice PostgreSQL because have more perfomance overall compared with MariaDB. MariaDB doesn’t match the high read and write speeds that PostgreSQL offers and accesses data at a slower speed.
+
+QUERY: 
+
+SELECT cl.address , MAX(cons.date) as max_consumption
+FROM test.consumptions as cons 
+LEFT join test.clients as cl
+ON cons.code = cl.code
+GROUP BY cl.address
+
+2 - We have a massive PostgreSQL cluster with millions of rows in some tables. Suddenly, one query starts showing up in the Slow Query Log. Please describe the actions you would do in order to diagnose and optimise the query.
+
+I will check if the cluster use a some kind of index. It's important to use clustered-index to improve read perfomances. If is clustered-index i will request a copy of database to changes the index and try who index is better to improve the perfomance of the query. A good tool to diagonse is put the sentence EXPLAIN before the query, it will show the join strategy, method of extracting data from tables, estimated rows involved. Also if i put sentence ANALYZE i will get the time spent to get the query result. Another solution is check if the query use a lot of joins/group by/havings sentences and i will to try to delete any of this sentences if is possible
+
+3 - You are in a Christmas dinner and somehow, your brother-in-law says we have charged him twice. You know this is completely impossible because we use transactions in our system! Try to explain what a transaction is to someone non very technical in a few sentences.
+
+It is a set of steps (actions) that are performed in the database, so that either all or none are completed. If any of these steps fails, prevent the transactionwill be complete, the steps are canceled and the database is not affected, so the changes that would result from executing this steps would not be applied. Therefore, if at the time of charging there has been a failure in some of the steps, the transaction is canceled and therefore the payment is not effective
+
+4 - We have a lot of activity in our databases so we have decided to implement master - slave replication in PostgreSQL. We also changed our code in order to write new records to the master and always read data from the slave. Luckily, the servers seem to be fine again in terms of CPU but we are discovering now we don't always get the latest written data. Why is this? How can we limit this effect?
+
+This occurs because the insertion of new data on the master server must be passed to the slave server later and this takes a minimum of time. Therefore it is possible that some writing data from the slave server will not available yet on the master server. A possible solution for this problem is to perform this replication in a few hours where there is less traffic and it is not so necessary to access said information
+
+5 - We just installed Redis and it is awesome! It is super fast and we can do lots of different operations with it so we have decided to load a lot of data into it. Suddenly, Redis becomes really slow and some keys are disappearing. What did we do wrong?
+
+Redis is a database system that stores information in the RAM of our server. Normally it is used to store static data in cache and  consult this data in a faster way. The main problem is if we use Redis as a persistent database, it is possible that if our system does not have a lot of RAM or we add a lot of information, we overload the memory and the system will have worst perfomance. Also when saving the information in memory, if the server is rebooted, all that information will be lost. Also by default the information that is stored in Redis has a determinate duration (this duration can be configured to keep in memory for as long as you need)
