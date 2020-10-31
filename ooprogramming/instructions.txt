@@ -37,4 +37,5 @@ $technical_test__NA_Holaluz__ok___3_/ooprogramming: composer install
 ```
 After execute this command (php bin/console app:products-parsing) on terminal:
 ```
-$technical_test__NA_Holaluz__ok___3_/ooprogramming: php bin/console app:client-reading-parser
+$technical_test__NA_Holaluz__ok___3_/ooprogramming: php bin/console execute:electricity-meter-reader public/feed/2016-readings.xml file
+$technical_test__NA_Holaluz__ok___3_/ooprogramming: php bin/console execute:electricity-meter-reader public/feed/2016-readings.csv file

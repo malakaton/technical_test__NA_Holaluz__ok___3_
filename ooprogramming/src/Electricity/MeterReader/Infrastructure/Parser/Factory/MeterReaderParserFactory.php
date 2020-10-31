@@ -28,6 +28,10 @@ final class MeterReaderParserFactory
             return new MeterReaderFile($path);
         }
 
+        if ($sourceType === self::URL_SOURCE_TYPE) {
+            // ToDo: For do in the future... soon...
+        }
+
         throw new SourceTypeNotFound($sourceType);
     }
 }

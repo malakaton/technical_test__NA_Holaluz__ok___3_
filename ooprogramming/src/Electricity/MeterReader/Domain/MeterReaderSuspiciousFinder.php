@@ -33,9 +33,9 @@ final class MeterReaderSuspiciousFinder
                 if (is_array($read)) {
                     $meterReader = MeterReader::create(
                         new MeterReaderClientId($read[MeterReaderClientId::ATTRIBUTE_NAME]),
-                        new MeterReaderPeriod($read[MeterReaderPeriod::ATTRIBUTE_NAME]),
-                        new MeterReaderReading((int)$read[MeterReaderReading::ATTRIBUTE_NAME]),
-                        $readsByClient[MeterReaderMedian::ATTRIBUTE_NAME]
+                        new MeterReaderPeriod($read[MeterReaderPeriod::ATTRIBUTE_NAME] ?? null),
+                        new MeterReaderReading((int) ($read[MeterReaderReading::ATTRIBUTE_NAME] ?? 0)),
+                        $readsByClient[MeterReaderMedian::ATTRIBUTE_NAME] ?? 0
                     );
                     $this->repository->isSuspiciousReading($meterReader) ? $result[] = $meterReader : null;
                 }

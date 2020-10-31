@@ -6,25 +6,27 @@ namespace App\Shared\Infrastructure\Symfony\File;
 
 use App\Shared\Domain\Parser\File\File as DomainFile;
 use App\Shared\Infrastructure\Symfony\Exception\SymfonyException;
+use App\Shared\Domain\Parser\File\Exception\FileNotFound;
 
 final class FromXmlExtension extends File
 {
     private \SimpleXMLElement $xml;
 
+    /**
+     * FromXmlExtension constructor.
+     * @param DomainFile $file
+     * @throws FileNotFound
+     */
     public function __construct(DomainFile $file)
     {
         parent::__construct($file);
+        $this->file()->setContent();
 
         $this->xml = simplexml_load_string(
             $this->file()->content()->value(),
             "SimpleXMLElement",
             LIBXML_NOCDATA
         );
-    }
-
-    public function toObject(): object
-    {
-        return $this->xml;
     }
 
     /**

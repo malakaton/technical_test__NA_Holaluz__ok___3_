@@ -12,7 +12,7 @@ use App\Shared\Domain\SourceTypeNotFound;
 
 final class MeterReaderParser implements MeterReaderRepository
 {
-    private const CALCULATE_PERCENTAGE_MEDIAN = 0.50;
+    private const PERCENTAGE_TO_CALCULATE_MIN_MAX_MEDIAN = 0.50;
 
     /**
      * @param string $path
@@ -27,7 +27,12 @@ final class MeterReaderParser implements MeterReaderRepository
         return $clientReadings->__toArray();
     }
 
-    public function calculateMedian(int $totalRecords, int $sumReadings):?MeterReaderMedian
+    /**
+     * @param int $totalRecords
+     * @param int $sumReadings
+     * @return MeterReaderMedian|null
+     */
+    public function calculateMedian(int $totalRecords, int $sumReadings): ?MeterReaderMedian
     {
         return new MeterReaderMedian(
             (int)round(
@@ -36,13 +41,21 @@ final class MeterReaderParser implements MeterReaderRepository
         );
     }
 
+    /**
+     * @param MeterReader $meterReader
+     * @return bool
+     */
     public function isSuspiciousReading(MeterReader $meterReader): bool
     {
         return $meterReader->reading()->higherThan(
-                new MeterReaderMedian((int) ($meterReader->median()->value() / self::CALCULATE_PERCENTAGE_MEDIAN))
+                new MeterReaderMedian(
+                    (int) ($meterReader->median()->value() / self::PERCENTAGE_TO_CALCULATE_MIN_MAX_MEDIAN)
+                )
             )
             || $meterReader->reading()->lowerThan(
-                new MeterReaderMedian((int) ($meterReader->median()->value() * self::CALCULATE_PERCENTAGE_MEDIAN))
+                new MeterReaderMedian(
+                    (int) ($meterReader->median()->value() * self::PERCENTAGE_TO_CALCULATE_MIN_MAX_MEDIAN)
+                )
             );
     }
 }

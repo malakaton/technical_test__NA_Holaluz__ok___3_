@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Symfony\File;
 
-use BooksManagement\Shared\Domain\Request\RequestRepository;
-use BooksManagement\Shared\Infrastructure\Symfony\Exception\SymfonyException;
+use App\Shared\Infrastructure\Symfony\Exception\SymfonyException;
 
 final class FromCsvExtension extends File
 {
@@ -16,10 +15,14 @@ final class FromCsvExtension extends File
     public function __toArray(): array
     {
         try {
-            $csv = [];
+            $csv = array_map("str_getcsv", file($this->file()->path()->value(),FILE_SKIP_EMPTY_LINES));
+            $keys = array_shift($csv);
 
-            $json = json_encode($csv);
-            return json_decode($json, true);
+            foreach ($csv as $i=>$row) {
+                $csv[$i] = array_combine($keys, $row);
+            }
+
+            return $csv;
         } catch (\Exception $e) {
             throw new SymfonyException($e->getMessage(), $e->getTrace());
         }
