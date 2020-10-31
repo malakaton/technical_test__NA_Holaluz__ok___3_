@@ -35,11 +35,12 @@ First run:
 ```
 $technical_test__NA_Holaluz__ok___3_/ooprogramming: composer install
 ```
-After execute this command (php bin/console app:products-parsing) on terminal:
+After execute this command (php bin/console execute:electricity-meter-reader) on terminal:
 ```
 $technical_test__NA_Holaluz__ok___3_/ooprogramming: php bin/console execute:electricity-meter-reader public/feed/2016-readings.xml file
 $technical_test__NA_Holaluz__ok___3_/ooprogramming: php bin/console execute:electricity-meter-reader public/feed/2016-readings.csv file
 ```
 To see report of code coverage tests, run:
 ```
-$technical_test__NA_Holaluz__ok___3_/ooprogramming: vendor/bin/phpunit --coverage-html public/reports/
+$technical_test__NA_Holaluz__ok___3_/ooprogramming: vendor/bin/phpunit (only execute the tests)
+$technical_test__NA_Holaluz__ok___3_/ooprogramming: vendor/bin/phpunit --coverage-html public/reports/ (generate a report to see code coverage in html format)
