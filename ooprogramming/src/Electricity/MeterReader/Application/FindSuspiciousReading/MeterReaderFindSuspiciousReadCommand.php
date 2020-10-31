@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Electricity\MeterReader\Application\FindSuspiciousReading;
 
-final class MeterReaderFindSuspiciousReadCommand
+use App\Shared\Domain\Command;
+
+final class MeterReaderFindSuspiciousReadCommand implements Command
 {
     private string $path;
     private string $sourceType;
