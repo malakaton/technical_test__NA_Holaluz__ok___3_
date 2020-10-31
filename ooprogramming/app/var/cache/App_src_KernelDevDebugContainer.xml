@@ -120,6 +120,7 @@
     <service id="App\Shared\Domain\Parser\File\FileExtension" class="App\Shared\Domain\Parser\File\FileExtension" autowire="true" autoconfigure="true"/>
     <service id="App\Shared\Domain\Parser\File\FilePath" class="App\Shared\Domain\Parser\File\FilePath" autowire="true" autoconfigure="true"/>
     <service id="App\Shared\Domain\SourceTypeNotFound" class="App\Shared\Domain\SourceTypeNotFound" autowire="true" autoconfigure="true"/>
+    <service id="App\Shared\Infrastructure\Symfony\Exception\SymfonyException" class="App\Shared\Infrastructure\Symfony\Exception\SymfonyException" autowire="true" autoconfigure="true"/>
     <service id="App\Shared\Infrastructure\Symfony\File\FromCsvExtension" class="App\Shared\Infrastructure\Symfony\File\FromCsvExtension" autowire="true" autoconfigure="true">
       <argument type="service" id="App\Shared\Domain\Parser\File\File"/>
     </service>
