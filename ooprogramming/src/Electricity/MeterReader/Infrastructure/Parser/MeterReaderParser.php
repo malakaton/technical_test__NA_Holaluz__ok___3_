@@ -7,7 +7,7 @@ namespace App\Electricity\MeterReader\Infrastructure\Parser;
 use App\Electricity\MeterReader\Domain\MeterReader;
 use App\Electricity\MeterReader\Domain\MeterReaderMedian;
 use App\Electricity\MeterReader\Domain\MeterReaderRepository;
-use App\Shared\Infrastructure\Parser\Factory\MeterReaderParserFactory;
+use App\Electricity\MeterReader\Infrastructure\Parser\Factory\MeterReaderParserFactory;
 use App\Shared\Domain\SourceTypeNotFound;
 
 final class MeterReaderParser implements MeterReaderRepository

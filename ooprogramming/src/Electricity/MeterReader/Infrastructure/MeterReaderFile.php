@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Electricity\MeterReader\Infrastructure\Parser;
+namespace App\Electricity\MeterReader\Infrastructure;
 
 use App\Shared\Domain\Parser\File\Exception\FileNotFound;
 use App\Shared\Domain\Parser\File\Exception\UnsupportedExtensionFile;

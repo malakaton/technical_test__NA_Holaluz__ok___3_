@@ -25,7 +25,7 @@ final class SourceTypeNotFound extends \Exception implements DomainException
             json_encode([
                 'message' => 'Source-type unsupported',
                 'errors' => [
-                    "The sourcet-type {$type} is not supported. Use 'file' source-type"
+                    "The source-type {$type} is not supported. Use 'file' source-type"
                 ]
             ], JSON_THROW_ON_ERROR),
             $code,

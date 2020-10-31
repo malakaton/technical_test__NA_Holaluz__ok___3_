@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Electricity\MeterReader\Domain;
+namespace App\Electricity\MeterReader\Domain\Exception;
 
 use App\Shared\Domain\DomainException;
 use Throwable;

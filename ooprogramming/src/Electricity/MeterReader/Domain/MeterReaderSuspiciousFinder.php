@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Electricity\MeterReader\Domain;
 
+use App\Electricity\MeterReader\Domain\Exception\ClientIdNotDefined;
+
 final class MeterReaderSuspiciousFinder
 {
     private MeterReaderRepository $repository;

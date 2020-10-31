@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Parser\Factory;
+namespace App\Electricity\MeterReader\Infrastructure\Parser\Factory;
 
-use App\Electricity\MeterReader\Infrastructure\Parser\MeterReaderFile;
+use App\Electricity\MeterReader\Infrastructure\MeterReaderFile;
 use App\Shared\Domain\Parser\ParserRepository;
 use App\Shared\Domain\SourceTypeNotFound;
 

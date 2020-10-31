@@ -6,6 +6,8 @@ namespace App\Tests\Electricity\MeterReader\Application\FindSuspiciousReading;
 
 use App\Electricity\MeterReader\Application\FindSuspiciousReading\MeterFindSuspiciousReadHandler;
 use App\Electricity\MeterReader\Application\FindSuspiciousReading\MeterReaderSuspiciousFinder;
+use App\Electricity\MeterReader\Domain\MeterReaderMedian;
+use App\Electricity\MeterReader\Domain\MeterReaderReading;
 use App\Tests\Electricity\MeterReader\Domain\MeterReaderMother;
 use App\Tests\Mocks\MeterReader\MeterReaderRepositoryMockUnitTestCase;
 
@@ -23,13 +25,18 @@ final class MeterFindSuspiciousReadHandlerTest extends MeterReaderRepositoryMock
     /**
      * @test
      */
-    public function it_should_load_meter_readers(): void
+    public function it_should_find_suspicious_reading(): void
     {
         $command = MeterFindSuspiciousReadCommandMother::random();
 
-        $meterReaders = MeterReaderMother::random();
+        $arrayMeterReaders = $this->shouldLoadMeterReader($command->path(), $command->sourceType());
 
-        $this->shouldLoadMeterReader($meterReaders);
+        $arrayMeterReaders[0][MeterReaderMedian::ATTRIBUTE_NAME] = $this->shouldCalculateMedian(
+            count($arrayMeterReaders),
+            $arrayMeterReaders[0][MeterReaderReading::ATTRIBUTE_NAME]
+        );
+
+        $this->shouldIsSuspiciousReading(MeterReaderMother::fromRequest($arrayMeterReaders[0]));
 
         $this->dispatch($command, $this->handler);
     }

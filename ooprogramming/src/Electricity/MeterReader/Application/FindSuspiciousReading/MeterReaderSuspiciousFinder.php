@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Electricity\MeterReader\Application\FindSuspiciousReading;
 
-use App\Electricity\MeterReader\Domain\ClientIDNotDefined;
 use App\Electricity\MeterReader\Domain\MeterReaderRepository;
 use App\Electricity\MeterReader\Domain\MeterReaderSuspiciousFinder as DomainMeterReaderSuspiciousFinder;
+use App\Electricity\MeterReader\Domain\Exception\ClientIdNotDefined;
 
 final class MeterReaderSuspiciousFinder
 {
@@ -22,7 +22,7 @@ final class MeterReaderSuspiciousFinder
      * @param string $path
      * @param string $sourceType
      * @return array|null
-     * @throws ClientIDNotDefined
+     * @throws ClientIdNotDefined
      */
     public function find(string $path, string $sourceType): ?array
     {

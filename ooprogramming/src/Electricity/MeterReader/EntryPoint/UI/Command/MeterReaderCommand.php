@@ -40,45 +40,58 @@ final class MeterReaderCommand extends Command
             );
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var HandledStamp $envelope */
-        $envelope = $this->commandBus->dispatch(
-            new MeterReaderFindSuspiciousReadCommand(
-                $input->getArgument('path'),
-                $input->getArgument('source-type')
-            )
-        )->last(HandledStamp::class);
+        try {
+            /** @var HandledStamp $envelope */
+            $envelope = $this->commandBus->dispatch(
+                new MeterReaderFindSuspiciousReadCommand(
+                    $input->getArgument('path'),
+                    $input->getArgument('source-type')
+                )
+            )->last(HandledStamp::class);
 
-        $output->write(
-            PHP_EOL . "<fg=black;bg=green><fg=black;bg=green>Client</>           </>"
-        );
-        $output->write(
-            "<fg=black;bg=green><fg=black;bg=green>Month</>      </>"
-        );
-        $output->write(
-            "<fg=black;bg=green><fg=black;bg=green>Suspicious</>   </>"
-        );
-        $output->write(
-             "<fg=black;bg=green><fg=black;bg=green>Median</>   </>" . PHP_EOL
-        );
-
-        $output->write(
-            "<fg=white;bg=green>--------------------------------------------------</>" . PHP_EOL
-        );
-
-        foreach ($envelope->getResult() as $meterReader) {
-            /**@var MeterReader $meterReader **/
             $output->write(
-                "<fg=black;bg=red><fg=black;bg=red></> {$meterReader->clientId()->value()} </>"
+                PHP_EOL . "<fg=black;bg=green><fg=black;bg=green>Client</>           </>"
             );
-            $output->write("<fg=black;bg=red><fg=black;bg=red></> {$meterReader->period()->date()}      </>");
             $output->write(
-                "<fg=black;bg=red><fg=black;bg=red></> {$meterReader->reading()->value()}       </>"
+                "<fg=black;bg=green><fg=black;bg=green>Month</>      </>"
             );
-            $output->writeln("<fg=black;bg=red><fg=black;bg=red></> {$meterReader->median()->value()} </><fg=black;bg=red><fg=black;bg=red></> </>");
+            $output->write(
+                "<fg=black;bg=green><fg=black;bg=green>Suspicious</>   </>"
+            );
+            $output->write(
+                "<fg=black;bg=green><fg=black;bg=green>Median</>   </>" . PHP_EOL
+            );
+
+            $output->write(
+                "<fg=white;bg=green>--------------------------------------------------</>" . PHP_EOL
+            );
+
+            foreach ($envelope->getResult() as $meterReader) {
+                /**@var MeterReader $meterReader * */
+                $output->write(
+                    "<fg=black;bg=red><fg=black;bg=red></> {$meterReader->clientId()->value()} </>"
+                );
+                $output->write("<fg=black;bg=red><fg=black;bg=red></> {$meterReader->period()->date()}      </>");
+                $output->write(
+                    "<fg=black;bg=red><fg=black;bg=red></> {$meterReader->reading()->value()}       </>"
+                );
+                $output->writeln(
+                    "<fg=black;bg=red><fg=black;bg=red></> {$meterReader->median()->value()} </><fg=black;bg=red><fg=black;bg=red></> </>"
+                );
+            }
+            $output->write(PHP_EOL);
+        } catch (\Exception $e) {
+            $output->write($e->getMessage());
+
+            return Command::FAILURE;
         }
-        $output->write(PHP_EOL);
 
         return Command::SUCCESS;
     }
